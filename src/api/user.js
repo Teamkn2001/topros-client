@@ -1,0 +1,53 @@
+import axios from "../configs/axios";
+
+export const editProfile = async (formData) => {
+  const rs = await axios.patch(`/user/editProfile`, formData, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("user-storage"))?.state?.token
+      }`,
+    },
+  });
+  return rs
+};
+
+export const getUserItems = () =>
+  axios.get(`/user/getItems`, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("user-storage"))?.state?.token
+      }`,
+    },
+  });
+
+export const deleteItem = (id) =>
+  axios.delete(`/user/deleteItem/${id}`, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("user-storage"))?.state?.token
+      }`,
+    },
+  });
+
+export const editItem = async (itemId, formData) => {
+  const rs = await axios.patch(`/user/editItem/${itemId}`, formData, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("user-storage"))?.state?.token
+      }`,
+    },
+  });
+  console.log("api response ===", rs);
+  return rs;
+};
+
+export const addItem = async (formData) => {
+  const rs = await axios.post(`/user/createItem`, formData, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("user-storage"))?.state?.token
+      }`,
+    },
+  });
+  return rs;
+};

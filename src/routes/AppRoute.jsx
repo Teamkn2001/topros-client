@@ -25,7 +25,6 @@ const router = createBrowserRouter([
 ])
 
 export default function AppRoute() {
-  const user = useUserStore(pull => pull.user)
   return (
     <div>
         <RouterProvider router={router} />

@@ -48,8 +48,6 @@ export default function LandingPage() {
         setCurrentPage(index);
     };
 
-    console.log(popularArtists)
-
     return (
         <div>
 
@@ -102,7 +100,7 @@ export default function LandingPage() {
             <div className='flex flex-col justify-center items-center'>
                 <h2>Popular Artists</h2>
                 <div className='h-[25rem] flex w-full overflow-x-scroll'>
-                    <div className='bg-green-200 flex gap-8 items-center px-10 '>
+                    <div className='bg-green-200 flex gap-8 items-center justify-center px-10 w-full'>
                        {popularArtists.map((artist, index) => (
                         <div className=''
                             key={index}>

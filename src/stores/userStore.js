@@ -1,22 +1,25 @@
 import {create} from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { login, register } from '../api/auth'
+import { getUserById, getUserByUsername } from '../api/guest'
 
-const useUserStore = create(persist((set) => ({
+const useUserStore = create(persist((set, get) => ({
     user : null,
     token : null,
     register: async (formData) => {
-        console.log("register", formData)
         const rs = await register(formData)
-        console.log(rs)
     },
     login: async (formData) => {
-        console.log("login", formData)
         const rs = await login(formData)
-        console.log(rs)
         set({ user: rs.data.user, token: rs.data.token })
     },
-    logout: () => set({ user: null, token: null})
+    logout: () => set({ user: null, token: null}),
+    fetchEditedUser: async (userId) => {
+        const rs = await getUserById(userId)
+        set({ user: rs.userData })
+        // console.log('after set new user', get().user)
+        return rs
+    }
 }),
     {
         name: 'user-storage',

@@ -13,7 +13,6 @@ export default function Header() {
   const logout = useUserStore(pull => pull.logout)
 
   const handleEnterAccount = () => {
-    console.log("clicked")
     if (user && token) {
       navigate('/MyAccount')
     } else {
