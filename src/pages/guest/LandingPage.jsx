@@ -29,7 +29,6 @@ export default function LandingPage() {
             }
         }
         fetchItems()
-
     }, [])
 
     const [currentPage, setCurrentPage] = useState(0);

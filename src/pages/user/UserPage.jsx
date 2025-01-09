@@ -23,6 +23,8 @@ export default function UserPage() {
     }
   }, [])
 
+  console.log(items)
+
   useEffect(() => {
     fetchUserData()
   }, [fetchUserData])
