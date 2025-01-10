@@ -8,5 +8,5 @@ export const getUserById = async (userId) => {
     const rs = await axios.get(`/getUser/${userId}`)
     return rs.data
 }
-
 export const getUserByUsername = (username) => axios.get(`/searchUsers/${username}`)
+export const getItemById = (itemId) => axios.get(`/getItemById/${itemId}`)

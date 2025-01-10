@@ -20,7 +20,7 @@ export default function Header() {
     }
   }
   return (
-    <div className='w-screen h-[5rem] bg-yellow-300 flex justify-around items-center'>
+    <div className='w-screen h-[5rem] bg-yellow-300 flex justify-around items-center fixed top-0 z-50'>
       <div>
         <h1>Topros Gallery</h1>
       </div>
@@ -28,9 +28,9 @@ export default function Header() {
 
         {user
           ? <button className='btn btn-outline btn-error'
-          onClick={() => (logout(), toast.warning('logged out'))}>
+            onClick={() => (logout(), toast.warning('logged out'))}>
             logout
-            </button>
+          </button>
           : <button
             onClick={() => setIsAuthOpen(true)}
             className="bg-blue-600 text-white px-4 py-2 rounded">Login</button>

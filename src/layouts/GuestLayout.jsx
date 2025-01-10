@@ -6,7 +6,7 @@ import Header from '../components/guest/Header'
 
 export default function GuestLayout() {
   return (
-    <div>
+    <div className='overflow-x-hidden'>
       <Header />
       <Outlet />
       <Footer />

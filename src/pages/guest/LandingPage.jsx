@@ -11,6 +11,8 @@ export default function LandingPage() {
     const [randomItems, setRandomItems] = useState([])
     const [popularArtists, setPopularArtists] = useState([])
 
+    const [watchItem, setWatchItem] = useState(null)
+
     useEffect(() => {
         const fetchItems = async () => {
             try {
@@ -34,9 +36,7 @@ export default function LandingPage() {
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 3;
     const pageCount = Math.ceil(popularItems.length / itemsPerPage);
-    const [direction, setDirection] = useState('right');
 
-    console.log("random item",randomItems.randomItem)
     // Get current page items
     const currentItems = popularItems.slice(
         currentPage * itemsPerPage,
@@ -48,8 +48,7 @@ export default function LandingPage() {
     };
 
     return (
-        <div>
-
+        <div className='pt-[5rem]'>
             <div className='flex flex-col justify-center items-center'>
                 <h2>Popular one!!</h2>
                 <div className='h-[25rem] flex w-full overflow-x-scroll'>
@@ -57,7 +56,7 @@ export default function LandingPage() {
                         {currentItems.map((item, index) => (
                             <div
                                 key={index}
-                                onClick={() => setIsItemModalOpen(true)}
+                                onClick={() => { setIsItemModalOpen(true), setWatchItem(item) }}
                             >
                                 <ItemCard width={'w-[16rem]'} height={'h-[14rem]'}
                                     imgUrl={item.artImg}
@@ -66,8 +65,8 @@ export default function LandingPage() {
                         ))}
                     </div>
                 </div>
-                <ItemModal isOpen={isItemModalOpen} onClose={() => setIsItemModalOpen(false)} />
             </div>
+            <ItemModal isOpen={isItemModalOpen} onClose={() => setIsItemModalOpen(false)} item={watchItem}/>
 
             <div className="flex items-center justify-center gap-2 mt-6">
                 {Array.from({ length: pageCount }).map((_, index) => (
@@ -86,12 +85,13 @@ export default function LandingPage() {
                 <h2>Random arts</h2>
                 <div className='h-[50rem] flex w-full overflow-y-scroll hide-scrollbar'>
                     <div className='bg-slate-200 flex flex-wrap gap-8 items-center justify-center'>
-                       {randomItems.map((item, index) => (
-                        <div
-                        key={index}>
-                            <ItemCard width={'w-[16rem]'} height={'h-[14rem]'} imgUrl={item.artImg}/>
-                        </div>
-                       ))}
+                        {randomItems.map((item, index) => (
+                            <div
+                            onClick={() => { setIsItemModalOpen(true), setWatchItem(item) }}
+                                key={index}>
+                                <ItemCard width={'w-[16rem]'} height={'h-[14rem]'} imgUrl={item.artImg} />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -99,13 +99,13 @@ export default function LandingPage() {
             <div className='flex flex-col justify-center items-center'>
                 <h2>Popular Artists</h2>
                 <div className='h-[25rem] flex w-full overflow-x-scroll'>
-                    <div className='bg-green-200 flex gap-8 items-center justify-center px-10 w-full'>
-                       {popularArtists.map((artist, index) => (
-                        <div className=''
-                            key={index}>
-                            <UserCard width={'w-[16rem]'} height={'h-[16rem]'} imgUrl={artist.profileImg}/>
-                        </div>
-                       ))}
+                    <div className='bg-green-200 flex gap-8 items-center px-6 w-full'>
+                        {popularArtists.map((artist, index) => (
+                            <div className=''
+                                key={index}>
+                                <UserCard width={'w-[16rem]'} height={'h-[16rem]'} imgUrl={artist.profileImg} />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

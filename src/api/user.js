@@ -51,3 +51,24 @@ export const addItem = async (formData) => {
   });
   return rs;
 };
+
+export const addComment = async (itemId, formData) => {
+  const rs = await axios.post(`/user/createComment/${itemId}`, formData, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("user-storage"))?.state?.token
+      }`,
+    },
+  });
+  return rs;
+}
+
+export const likeItemToggle = async (itemId) => {
+  const rs = await axios.post(`user/likes/toggle/${itemId}`, null, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("user-storage"))?.state?.token
+      }`
+    }
+  })
+}
