@@ -25,4 +25,4 @@ dist-ssr
 
 .env
 
-.config.js
+config.js
