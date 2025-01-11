@@ -35,9 +35,10 @@ export default function Header() {
             onClick={() => setIsAuthOpen(true)}
             className="bg-blue-600 text-white px-4 py-2 rounded">Login</button>
         }
-        <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
 
         <button className="btn btn-outline" onClick={() => handleEnterAccount()}>Your Account</button>
+        
+        <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
       </div>
     </div>
   )

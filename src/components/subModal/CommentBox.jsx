@@ -2,7 +2,6 @@ import React from 'react'
 import defaultAvatar from '../../assets/defaultAvatar.png'
 
 export default function CommentBox({comment}) {
-    const time = new Date(comment.createdAt).toLocaleTimeString()
     return (
         <div className="flex space-x-4 p-4  max-w-2xl bg-yellow-300">
             {/* Avatar */}
@@ -19,7 +18,7 @@ export default function CommentBox({comment}) {
             <div className="flex-1">
                 <div className="flex items-center space-x-2 mb-1">
                     <span className="font-medium text-gray-900">{comment.author.username}</span>
-                    <span className="text-sm text-gray-500">{time}</span>
+                    <span className="text-sm text-gray-500">{comment.createdAt}</span>
                 </div>
 
                 {/* Comment text */}

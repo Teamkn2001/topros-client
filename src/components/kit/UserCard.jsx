@@ -1,7 +1,10 @@
 import React from 'react'
 import defaultAvatar from '../../../src/assets/defaultAvatar.png'
 
-export default function UserCard({width = "w-64", height = "h-64", imgUrl = defaultAvatar}) {
+export default function UserCard({width = "w-64", height = "h-64", imgUrl}) {
+  if (!imgUrl) {
+    imgUrl = defaultAvatar
+  }
   return (
     <div className={`${width} ${height} bg-red-200 rounded-full overflow-hidden`} >
             <img 

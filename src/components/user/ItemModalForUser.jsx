@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import Modal from './Modal'
-import { CircleChevronDown, CircleChevronUp, Heart, Send } from 'lucide-react'
+import { CircleChevronDown, CircleChevronUp, Heart, PencilLine, Send } from 'lucide-react'
 import { LikeIcon, LikeGrayIcon } from '../Icons/Icon'
 import { toast } from 'react-toastify'
 import { getItemById } from '../../api/guest'
-import ItemCard from './ItemCard'
 import CommentBox from '../subModal/CommentBox'
 import useUserStore from '../../stores/userStore'
 import { addComment, likeItemToggle } from '../../api/user'
+import Modal from '../kit/Modal'
+import ItemCard from '../kit/ItemCard'
 
-export default function ItemModal({ isOpen, onClose, item }) {
+export default function ItemModalForUser({ isOpen, onClose, item, setIsEditModalOpen }) {
     const [isCommentOpen, setIsCommentOpen] = useState(false)
     const [itemData, setItemData] = useState(null)
     const [comment, setComment] = useState('')
@@ -53,7 +53,7 @@ export default function ItemModal({ isOpen, onClose, item }) {
 
         const newDate = new Date()
         const displayDate = newDate.toLocaleString('en-GB')
-        const dateData = displayDate.split(',')[1].slice(0, 6) +' ' + displayDate.split(',')[0]
+        const dateData = displayDate.split(',')[1].slice(0, 6) + ' ' + displayDate.split(',')[0]
 
         const newComment = {
             text: comment,
@@ -77,24 +77,26 @@ export default function ItemModal({ isOpen, onClose, item }) {
                 try {
                     const fetchedItem = await getItemById(item.id)
                     const itemData = fetchedItem.data.item
-              
+
                     const categoryFix = {
                         ...fetchedItem,
-                        data : {
+                        data: {
                             ...fetchedItem.data,
-                            item : {
+                            item: {
                                 ...fetchedItem.data.item,
-                                category : fetchedItem.data.item.category.replace('_', ' '),
-                                Comment : fetchedItem.data.item.Comment.map((comment) => {
+                                category: fetchedItem.data.item.category.replace('_', ' '),
+                                Comment: fetchedItem.data.item.Comment.map((comment) => {
                                     const newDate = new Date(comment.createdAt)
                                     const displayDate = newDate.toLocaleString('en-GB')
-                                    const dateData = displayDate.split(',')[1].slice(0, 6) +' ' + displayDate.split(',')[0]
+                                    const dateData = displayDate.split(',')[1].slice(0, 6) + ' ' + displayDate.split(',')[0]
+                                    console.log('dddd', dateData)
                                     return {
                                         ...comment,
-                                        createdAt : dateData}
+                                        createdAt: dateData
+                                    }
                                 })
                             }
-                        } 
+                        }
                     }
                     setItemData(categoryFix.data.item)
 
@@ -141,7 +143,12 @@ export default function ItemModal({ isOpen, onClose, item }) {
                         <ItemCard imgUrl={item?.artImg} />
                     </div>
                     <div className='flex-1 bg-green-300 flex flex-col justify-start p-6'>
+                        <div className='flex gap-2'>
                         <h1 className='text-[2rem]'>{itemData?.artName || 'art name'}</h1>
+                        <button onClick={() => {onClose(), setIsEditModalOpen(true)}}>
+                        <PencilLine size={30} color="#bda405" />
+                        </button>
+                        </div>
                         <p>Artist : {itemData?.owner?.username} </p>
                         <p>Detail : {itemData?.artDescription || 'user bored to write now'}</p>
                         <p>type : {itemData?.category || 'user bored to write now'}</p>

@@ -10,3 +10,6 @@ export const getUserById = async (userId) => {
 }
 export const getUserByUsername = (username) => axios.get(`/searchUsers/${username}`)
 export const getItemById = (itemId) => axios.get(`/getItemById/${itemId}`)
+
+export const searchItems = (itemName) => axios.get(`/searchItems/items?itemName=${itemName}`)
+export const searchUsers = (userName) => axios.get(`/searchUsers/users?userName=${userName}`)
