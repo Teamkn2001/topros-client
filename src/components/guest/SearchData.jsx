@@ -5,14 +5,14 @@ import ItemCard from '../kit/ItemCard'
 import UserCard from '../kit/UserCard'
 
 export default function SearchData({
-     // Modal controls
-     setIsItemModalOpen,
-     setIsUserModalOpen,
-     
-     // Selected item/user setters
-     setWatchItem,
-     setWatchUser
- }) {
+    // Modal controls
+    setIsItemModalOpen,
+    setIsUserModalOpen,
+
+    // Selected item/user setters
+    setWatchItem,
+    setWatchUser
+}) {
     const [searchData, setSearchData] = useState('')
     const [searchItemResult, setSearchItemResult] = useState(null)
     const [searchUserResult, setSearchUserResult] = useState(null)
@@ -81,14 +81,18 @@ export default function SearchData({
                 <div className=' max-h-[50rem] flex flex-wrap items-center justify-center gap-5 overflow-y-auto hide-scrollbar'>
                     {searchItemResult &&
                         searchItemResult.map((item, index) => (
-                            <div className='flex flex-col items-center justify-center' key={index}
+                            <div
+                                className='flex flex-col items-center justify-center'
+                                key={index}
                                 onClick={() => { setIsItemModalOpen(true), setWatchItem(item) }}>
                                 <ItemCard width={'w-[16rem]'} height={'h-[14rem]'} imgUrl={item.artImg} />
                             </div>))
                     }
 
                     {searchUserResult && searchUserResult.map((user, index) => (
-                        <div onClick={() => { setIsUserModalOpen(true), setWatchUser(user) }}>
+                        <div
+                            key={index}
+                            onClick={() => { setIsUserModalOpen(true), setWatchUser(user) }}>
                             <UserCard width={'w-[16rem]'} height={'h-[16rem]'} imgUrl={user.profileImage} />
                         </div>))}
                 </div>

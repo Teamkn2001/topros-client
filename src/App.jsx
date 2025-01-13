@@ -1,12 +1,14 @@
 import AppRoute from './routes/AppRoute'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import DesktopNotice from './components/guest/DeskTopNotice'
 
 function App() {
   return (
     <>
-    <ToastContainer /> 
-    <AppRoute />
+      <DesktopNotice />
+      <ToastContainer />
+      <AppRoute />
     </>
   )
 }

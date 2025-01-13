@@ -6,6 +6,7 @@ import useUserStore from '../../stores/userStore'
 import UserCard from '../kit/UserCard'
 import logFormData from '../../utils/logFormData'
 import { editProfile } from '../../api/user'
+import ResetPassword from './ResetPassword'
 
 export default function EditProfileModal({ isOpen, onClose }) {
     const user = useUserStore(pull => pull.user)
@@ -19,6 +20,8 @@ export default function EditProfileModal({ isOpen, onClose }) {
 
     const [previewImage, setPreviewImage] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+
+    const [view, setView] = useState('profile')
 
     function clearForm() {
         setProfileForm({
@@ -39,15 +42,22 @@ export default function EditProfileModal({ isOpen, onClose }) {
             setProfileForm(prev => ({ ...prev, profileImage: file }))
             // create a preview
             const previewUrl = URL.createObjectURL(file)
-            console.log("previewUrl image ===", previewUrl)
             setPreviewImage(previewUrl)
         }
     }
 
     const handleSubmit = async (e) => {
-        try {
-            e.preventDefault()
+        e.preventDefault()
 
+        if (profileForm.username === '') {
+            return toast.warn('Username is required')
+        }
+        if (profileForm.username?.length > 20 || profileForm.bio?.length > 80) {
+            toast.warn('Username must be less than 20 characters and bio must be less than 80 characters')
+            return
+        }
+
+        try {
             const formData = new FormData()
             formData.append('username', profileForm.username)
             formData.append('bio', profileForm.bio)
@@ -58,9 +68,7 @@ export default function EditProfileModal({ isOpen, onClose }) {
             logFormData(formData)
 
             const useEditProfile = await editProfile(formData)
-            console.log("pass edit")
             const rs = await fetchEditedUser(user.id)
-            console.log('pass fetchNew')
             clearForm()
             onClose()
 
@@ -92,117 +100,125 @@ export default function EditProfileModal({ isOpen, onClose }) {
             {isLoading
                 ? <div className='min-w-[26rem] flex justify-center items-center h-[30rem]'><p>Loading...</p></div>
                 :
-                <div className="min-w-[40rem] max-w-md p-6 ">
-                    {/* Header */}
-                    <div className="flex justify-between items-center ">
-                        <div></div>
-                        <button
-                            onClick={() => { onClose(), clearForm() }}
-                            className="text-gray-400 hover:text-gray-500"
-                        >
-                            ✕
-                        </button>
-                    </div>
-                    {/* Form */}
-                    <form onSubmit={(e) => handleSubmit(e)} className="space-y-4 flex justify-center gap-6">
-                        <div className='w-full flex justify-center items-center'>
-                            <div className=' bg-slate-100 rounded-full border-2 border-black border-dashed flex justify-center items-center '>
-                                {previewImage
-                                    ? <div className='w-full h-full relative flex items-center justify-center group'>
-                                        <div className='absolute opacity-0 group-hover:opacity-75 transition-opacity duration-500'>
-                                            <div className='flex flex-col items-center justify-center rounded-full   w-[7rem] h-[7rem] bg-slate-200 cursor-pointer'>
-                                                <label htmlFor="image-upload" className='cursor-pointer flex flex-col items-center gap-2'>
-                                                    <ImagePlus className="text-gray-600" />
-                                                    <span className="text-sm text-gray-600">Change Image</span>
-                                                </label>
-                                                <input
-                                                    type="file"
-                                                    id="image-upload"
-                                                    className='hidden'
-                                                    accept="image/*"
-                                                    aria-label="Upload image"
-                                                    onChange={handleImageUpload}
-                                                />
-                                            </div>
-                                        </div>
-                                        <UserCard imgUrl={previewImage} />
-                                    </div>
-                                    : <div className='w-full h-full relative flex items-center justify-center group overflow-hidden '>
-                                        <div className='absolute opacity-0 group-hover:opacity-75 transition-opacity duration-500'>
-                                            <div className='flex flex-col items-center justify-center rounded-full   w-[7rem] h-[7rem] bg-slate-200 cursor-pointer'>
-                                                <label htmlFor="image-upload" className='cursor-pointer flex flex-col items-center gap-2'>
-                                                    <ImagePlus className="text-gray-600" />
-                                                    <span className="text-sm text-gray-600">Change Image</span>
-                                                </label>
-                                                <input
-                                                    type="file"
-                                                    id="image-upload"
-                                                    className='hidden'
-                                                    accept="image/*"
-                                                    aria-label="Upload image"
-                                                    onChange={handleImageUpload}
-                                                />
-                                            </div>
-                                        </div>
-                                        <UserCard imgUrl={profileForm.profileImage} />
-                                    </div>
-                                }
-                            </div>
-                        </div>
-
-                        <div className='w-full flex flex-col gap-6 py-4'>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">
-                                    Username
-                                </label>
-                                <input
-                                    name='username'
-                                    value={profileForm.username}
-                                    onChange={(e) => handleInputChange(e)}
-                                    className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">
-                                    Description
-                                </label>
-                                <input
-                                    name='bio'
-                                    value={profileForm.bio}
-                                    onChange={(e) => handleInputChange(e)}
-                                    type="text"
-                                    className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-                                />
-                            </div>
-
-                            {/* <div>
-                                <label className="block text-sm font-medium text-gray-700">
-                                    Category
-                                </label>
-                                <select
-                                    name="category"
-                                    value={itemFrom.category || 'indie_art'}
-                                    onChange={(e) => handleInputChange(e)}
-                                    className='mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-white'
+                (
+                    <div className="min-w-[40rem] max-w-md p-6 ">
+                        {/* Header */}
+                        <div className="flex justify-between items-center">
+                            {view === 'resetPassword' && (
+                                <button
+                                    onClick={() => setView('profile')}
+                                    className="text-gray-400 hover:text-gray-500"
                                 >
-                                    <option value="" disabled>Select a category</option>
-                                    {categories.map((category, index) => (
-                                    <option key={index} value={category.value}>{category.label}</option>
-                                ))}
-                                </select>
-                            </div> */}
-
-                            <button className="btn btn-success">Save</button>
+                                    ← Back
+                                </button>
+                            )}
+                            <div></div>
+                            <button
+                                onClick={() => {
+                                    onClose()
+                                    clearForm()
+                                    setView('profile')
+                                }}
+                                className="text-gray-400 hover:text-gray-500"
+                            >
+                                ✕
+                            </button>
                         </div>
 
-                        {/* <button className="btn btn-error" type='button' onClick={() => handleRemoveItem()}>Remove</button> */}
-                    </form>
+                        {/* Content */}
+                        {view === 'profile' ? (
+                            <form onSubmit={(e) => handleSubmit(e)} className="space-y-4 flex flex-col justify-center gap-6">
+                                <div className='flex gap-2'>
+                                    <div className='w-full flex justify-center items-center'>
+                                        <div className=' bg-slate-100 rounded-full border-2 border-black border-dashed flex justify-center items-center '>
+                                            {previewImage
+                                                ? <div className='w-full h-full relative flex items-center justify-center group'>
+                                                    <div className='absolute opacity-0 group-hover:opacity-75 transition-opacity duration-500'>
+                                                        <div className='flex flex-col items-center justify-center rounded-full   w-[7rem] h-[7rem] bg-slate-200 cursor-pointer'>
+                                                            <label htmlFor="image-upload" className='cursor-pointer flex flex-col items-center gap-2'>
+                                                                <ImagePlus className="text-gray-600" />
+                                                                <span className="text-sm text-gray-600">Change Image</span>
+                                                            </label>
+                                                            <input
+                                                                type="file"
+                                                                id="image-upload"
+                                                                className='hidden'
+                                                                accept="image/*"
+                                                                aria-label="Upload image"
+                                                                onChange={handleImageUpload}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <UserCard imgUrl={previewImage} />
+                                                </div>
+                                                : <div className='w-full h-full relative flex items-center justify-center group overflow-hidden '>
+                                                    <div className='absolute opacity-0 group-hover:opacity-75 transition-opacity duration-500'>
+                                                        <div className='flex flex-col items-center justify-center rounded-full   w-[7rem] h-[7rem] bg-slate-200 cursor-pointer'>
+                                                            <label htmlFor="image-upload" className='cursor-pointer flex flex-col items-center gap-2'>
+                                                                <ImagePlus className="text-gray-600" />
+                                                                <span className="text-sm text-gray-600">Change Image</span>
+                                                            </label>
+                                                            <input
+                                                                type="file"
+                                                                id="image-upload"
+                                                                className='hidden'
+                                                                accept="image/*"
+                                                                aria-label="Upload image"
+                                                                onChange={handleImageUpload}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <UserCard imgUrl={profileForm?.profileImage} />
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
 
-                    {/* Footer */}
-                    <div className="mt-4 text-center text-sm">
+                                    <div className='w-full flex flex-col gap-6 py-4'>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                Username
+                                            </label>
+                                            <input
+                                                name='username'
+                                                value={profileForm?.username}
+                                                onChange={(e) => handleInputChange(e)}
+                                                className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                Bio
+                                            </label>
+                                            <input
+                                                name='bio'
+                                                value={profileForm?.bio || ''}
+                                                onChange={(e) => handleInputChange(e)}
+                                                type="text"
+                                                className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
+                                            />
+                                        </div>
+                                        <button className="btn btn-success">Save</button>
+                                    </div>
+
+                                </div>
+
+                                <div className="mt-4 text-center text-sm">
+                                    <button
+                                        type="button"
+                                        onClick={() => setView('resetPassword')}
+                                        className="text-blue-500 hover:text-blue-600 hover:underline"
+                                    >
+                                        Reset Password
+                                    </button>
+                                </div>
+                            </form>
+                        ) : (
+                            <ResetPassword onClose={onClose}/>
+                        )}
                     </div>
-                </div>}
+                )}
         </Modal>
     )
 }

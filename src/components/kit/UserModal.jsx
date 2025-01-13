@@ -9,6 +9,7 @@ export default function UserModal({ isOpen, onClose, user }) {
     const [isItemModalOpen, setIsItemModalOpen] = useState(false)
     const [watchItem, setWatchItem] = useState(null)
     const isNoItem = user?.ownedItems.length === 0
+    
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
 
@@ -22,9 +23,10 @@ export default function UserModal({ isOpen, onClose, user }) {
             <div className="mt-4 mx-12 w-max-[45rem] min-w-[35rem] mb-6">
                 <div className="flex items-center space-x-4 gap-8">
                     <UserCard width={'w-[10rem]'} height={'h-[10rem]'} imgUrl={user?.profileImg} />
-                    <div className='flex flex-col justify-center items-start gap-2'>
+                    <div className='flex flex-col justify-center items-start gap-1 max-w-[50rem]'>
                         <h2 className="text-5xl font-bold">{user?.username}</h2>
-                        <p className='text-xl font-light'>{user?.bio || "user is bored now"}</p>
+                        <p className='font-semibold text-gray-400'>{user?.email}</p>
+                        <p className='text-xl font-light'>{user?.bio || ''}</p>
                         <div className='flex gap-2'>
                             <LikeIcon width={30} />
                             <p className='text-lg font-semibold text-red-500'>{user?.totalLikes || "0"}</p>
@@ -39,7 +41,7 @@ export default function UserModal({ isOpen, onClose, user }) {
                 </div>
             }
 
-            <div className='flex w-full max-h-[28rem] overflow-y-scroll mb-3 px-5'>
+            <div className='flex w-full max-h-[28rem] overflow-y-scroll mb-3 px-5 justify-center items-center'>
                 <div className='bg-slate-100 flex flex-wrap gap-8 items-center justify-center'>
                     {user?.ownedItems.map((item, index) => (
                         <div

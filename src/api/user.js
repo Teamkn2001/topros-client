@@ -8,7 +8,7 @@ export const editProfile = async (formData) => {
       }`,
     },
   });
-  return rs
+  return rs;
 };
 
 export const getUserItems = () =>
@@ -61,14 +61,44 @@ export const addComment = async (itemId, formData) => {
     },
   });
   return rs;
-}
+};
 
 export const likeItemToggle = async (itemId) => {
   const rs = await axios.post(`user/likes/toggle/${itemId}`, null, {
     headers: {
       Authorization: `Bearer ${
         JSON.parse(localStorage.getItem("user-storage"))?.state?.token
-      }`
+      }`,
+    },
+  });
+};
+
+export const verifyPassword = async (oldPassword) => {
+  const rs = await axios.post(
+    `/user/verifyPassword`,
+    { oldPassword },
+    {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user-storage"))?.state?.token
+        }`,
+      },
     }
-  })
-}
+  );
+  return rs;
+};
+
+export const resetPassword = async (formData) => {
+  const rs = await axios.patch(
+    `/user/resetPassword`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("user-storage"))?.state?.token
+        }`,
+      },
+    }
+  );
+  return rs;
+};

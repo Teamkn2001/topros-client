@@ -6,7 +6,7 @@ export default function UserCard({width = "w-64", height = "h-64", imgUrl}) {
     imgUrl = defaultAvatar
   }
   return (
-    <div className={`${width} ${height} bg-red-200 rounded-full overflow-hidden`} >
+    <div className={`${width} ${height}  rounded-full overflow-hidden`} >
             <img 
             src={`${imgUrl}`} 
             alt="art image" 

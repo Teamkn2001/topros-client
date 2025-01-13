@@ -8,6 +8,7 @@ import useUserStore from '../../stores/userStore'
 import { addComment, likeItemToggle } from '../../api/user'
 import Modal from '../kit/Modal'
 import ItemCard from '../kit/ItemCard'
+import defaultAvatar from '../../assets/defaultAvatar.png'
 
 export default function ItemModalForUser({ isOpen, onClose, item, setIsEditModalOpen }) {
     const [isCommentOpen, setIsCommentOpen] = useState(false)
@@ -188,7 +189,7 @@ export default function ItemModalForUser({ isOpen, onClose, item, setIsEditModal
                         <div className="flex-shrink-0">
                             <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
                                 <img
-                                    src={user?.profileImage}
+                                    src={user?.profileImage || defaultAvatar}
                                     alt="User avatar"
                                     className="w-full h-full object-cover"
                                 />

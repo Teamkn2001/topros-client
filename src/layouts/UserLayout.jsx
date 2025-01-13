@@ -13,10 +13,10 @@ export default function UserLayout() {
         <div className='relative'>
             <div
                 onClick={() => navigate('/')}
-                className='fixed right-0 rounded-full w-20 h-20 bg-red-500 flex justify-center items-center p-7 m-5 cursor-pointer'> <House /></div>
+                className='fixed right-0 rounded-full w-20 h-20 bg-[#F7BB00] hover:bg-white duration-300 flex justify-center items-center p-7 m-5 cursor-pointer'> <House /></div>
             <div
                 onClick={() => setIsEditModalOpen(true)}
-                className='fixed right-0 top-[6rem] rounded-full w-20 h-20 bg-red-500 flex justify-center items-center p-7 m-5'><UserRoundPen /></div>
+                className='fixed right-0 top-[6rem] rounded-full w-20 h-20 bg-[#F74B00] hover:bg-white duration-300 flex justify-center items-center p-7 m-5 cursor-pointer'><UserRoundPen /></div>
             <UserHeader />
             <Outlet />
             <EditProfileModal isOpen={isEditModalOpen} onClose={() => { setIsEditModalOpen(false) }} />
