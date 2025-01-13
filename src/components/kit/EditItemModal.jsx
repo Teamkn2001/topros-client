@@ -5,6 +5,7 @@ import ItemCard from './ItemCard'
 import { deleteItem, editItem } from '../../api/user'
 import { toast } from 'react-toastify'
 import logFormData from '../../utils/logFormData'
+import UploadLoading from '../user/UploadLoading'
 
 export default function EditItemModal({ isOpen, onClose, item, onSuccess }) {
 
@@ -84,7 +85,6 @@ export default function EditItemModal({ isOpen, onClose, item, onSuccess }) {
             if (itemFrom.newArtIme) {
                 formData.append('newImage', itemFrom.newArtIme)
             }
-            // logFormData(formData)
 
             const editArt = await editItem(itemFrom.id, formData)
 
@@ -124,7 +124,7 @@ export default function EditItemModal({ isOpen, onClose, item, onSuccess }) {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             {isLoading
-                ? <div className='min-w-[26rem] flex justify-center items-center h-[30rem]'><p>Loading...</p></div>
+                ? <UploadLoading />
                 : <div className="min-w-[26rem] max-w-md p-6 ">
                     {/* Header */}
                     <div className="flex justify-between items-center mb-6">

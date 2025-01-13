@@ -5,7 +5,7 @@ import roof from '../../assets/roof.svg'
 
 export default function UserHeader() {
   const user = useUserStore(pull => pull.user)
-  console.log(user)
+
   return (
     <div className='flex items-center h-[18rem]' 
     style={{backgroundImage: `url(${roof})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>

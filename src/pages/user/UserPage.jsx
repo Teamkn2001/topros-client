@@ -19,7 +19,6 @@ export default function UserPage() {
 
   const fetchUserData = useCallback(async () => {
     try {
-      // fetch user data
       const artistItems = await getUserItems()
       setItems(artistItems.data.data)
     } catch (error) {
@@ -27,8 +26,6 @@ export default function UserPage() {
       console.log(errMsg)
     }
   }, [])
-
-  console.log(items)
 
   useEffect(() => {
     fetchUserData()
@@ -42,7 +39,9 @@ export default function UserPage() {
 
       <div className='flex flex-wrap gap-4 justify-center items-center'>
         {items.map((item, index) => (
-          <div onClick={() => { setIsItemModalOpen(true), setWatchItem(item), setSelectedItem(item)}} key={index}>
+          <div 
+          className='border-[12px] border-[#a76809d3] p-3 border-opacity-90 hover:border-[#F74B00] cursor-pointer m-2 duration-300 rounded-sm'
+          onClick={() => { setIsItemModalOpen(true), setWatchItem(item), setSelectedItem(item)}} key={index}>
             <ItemCard imgUrl={item.artImg} />
           </div>
         ))}

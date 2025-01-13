@@ -4,6 +4,7 @@ import { ImagePlus } from 'lucide-react';
 import { toast } from 'react-toastify';
 import logFormData from '../../utils/logFormData';
 import { addItem } from '../../api/user';
+import UploadLoading from '../user/UploadLoading';
 
 
 export default function AddItemModal({ isOpen, onClose, onSuccess }) {
@@ -56,8 +57,17 @@ export default function AddItemModal({ isOpen, onClose, onSuccess }) {
     }
 
     const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        if(!itemFrom.artImg) {
+            return toast.error('Please upload an image')
+        } else if(!itemFrom.artName) {
+            return toast.error('Please enter a name')
+        } else if (!itemFrom.category) {
+            return toast.error('Please select a category')
+        } 
+
         try {
-            e.preventDefault()
             setLoading(true)
 
             const formData = new FormData()
@@ -95,7 +105,7 @@ export default function AddItemModal({ isOpen, onClose, onSuccess }) {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             {loading
-                ? <div className='flex justify-center items-center h-96'>loading...</div>
+                ? <UploadLoading />
                 : <div className="min-w-[26rem] max-w-md p-6 ">
                     {/* Header */}
                     <div className="flex justify-between items-center mb-6">

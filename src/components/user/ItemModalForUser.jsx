@@ -90,7 +90,6 @@ export default function ItemModalForUser({ isOpen, onClose, item, setIsEditModal
                                     const newDate = new Date(comment.createdAt)
                                     const displayDate = newDate.toLocaleString('en-GB')
                                     const dateData = displayDate.split(',')[1].slice(0, 6) + ' ' + displayDate.split(',')[0]
-                                    console.log('dddd', dateData)
                                     return {
                                         ...comment,
                                         createdAt: dateData
@@ -121,7 +120,7 @@ export default function ItemModalForUser({ isOpen, onClose, item, setIsEditModal
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             {/* header */}
-            <div className='w-full h-auto flex gap-3 items-center justify-between px-7 py-2 bg-yellow-200 '>
+            <div className='w-full h-auto flex gap-3 items-center justify-between px-7 py-2'>
                 <button
                     onClick={() => handleClickLike()}
                     className='flex gap-2 items-center '>
@@ -139,16 +138,18 @@ export default function ItemModalForUser({ isOpen, onClose, item, setIsEditModal
 
             {isCommentOpen
                 ? null
-                : <div className='flex w-[45rem]'>
-                    <div className='flex-1 bg-pink-200 flex justify-center items-center p-4'>
+                : <div className='flex w-[45rem] '>
+                    <div className='flex-1 flex justify-center items-center p-4  ml-4'>
                         <ItemCard imgUrl={item?.artImg} />
                     </div>
-                    <div className='flex-1 bg-green-300 flex flex-col justify-start p-6'>
+                    <div className='flex-1 flex flex-col justify-start p-6   mr-4'>
                         <div className='flex gap-2'>
-                        <h1 className='text-[2rem]'>{itemData?.artName || 'art name'}</h1>
-                        <button onClick={() => {onClose(), setIsEditModalOpen(true)}}>
-                        <PencilLine size={30} color="#bda405" />
-                        </button>
+                            <h1 className='text-[2rem]'>{itemData?.artName || 'art name'}</h1>
+                            <button
+                            className='group'
+                                onClick={() => { onClose(), setIsEditModalOpen(true) }}>
+                                <PencilLine size={30} className='text-[#bda405] group-hover:text-[#f0b804] transition-colors' />
+                            </button>
                         </div>
                         <p>Artist : {itemData?.owner?.username} </p>
                         <p>Detail : {itemData?.artDescription || 'user bored to write now'}</p>
@@ -157,12 +158,12 @@ export default function ItemModalForUser({ isOpen, onClose, item, setIsEditModal
                 </div>
             }
 
-            <div className='w-[45rem]'>
-                <div className='w-full text-center py-1 '>
+            <div className={`w-[45rem] ${isCommentOpen ? 'slide-top' : 'slide-bottom'}`}>
+                <div className='w-full text-center py-1 border-y border-dashed border-gray-500 bg-slate-100'>
                     <button onClick={() => setIsCommentOpen(!isCommentOpen)}>
                         {isCommentOpen
                             ? <div className='flex gap-2'>
-                                <p>close Comments</p>
+                                <p className='text-lg font-semibold'>close Comments</p>
                                 <CircleChevronDown />
                             </div>
                             : <div className='flex gap-2'>
@@ -173,7 +174,7 @@ export default function ItemModalForUser({ isOpen, onClose, item, setIsEditModal
                     </button>
                 </div>
 
-                <div className={`bg-green-300 ${isCommentOpen ? 'min-h-[20rem] max-h-[35rem]' : 'max-h-[15rem]'} overflow-y-auto `}>
+                <div className={`${isCommentOpen ? 'min-h-[20rem] max-h-[35rem]' : 'max-h-[15rem]'} overflow-y-auto m-4`}>
                     {itemData?.Comment.map((comment, index) => (
                         <div key={index}>
                             <CommentBox comment={comment} />

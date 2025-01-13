@@ -3,7 +3,7 @@ import defaultAvatar from '../../assets/defaultAvatar.png'
 
 export default function CommentBox({comment}) {
     return (
-        <div className="flex space-x-4 p-4  max-w-2xl bg-yellow-300">
+        <div className="flex space-x-4 p-4 max-w-2xl ">
             {/* Avatar */}
             <div className="flex-shrink-0">
                 <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">

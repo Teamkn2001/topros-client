@@ -24,12 +24,12 @@ export default function Modal({ isOpen, onClose, children }) {
     <div className="fixed inset-0 z-50 ">
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black/70 transition-opacity"
+        className="fixed inset-0 bg-black/70 transition-opacity "
         onClick={onClose}
       />
       
       {/* Modal Content */}
-      <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl slide-top">
+      <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl scale-up-center">
         {children}
       </div>
     </div>
