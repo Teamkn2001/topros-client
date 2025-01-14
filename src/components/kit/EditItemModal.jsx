@@ -44,7 +44,6 @@ export default function EditItemModal({ isOpen, onClose, item, onSuccess }) {
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0]
-        console.log("file image ===", file)
 
         if (file) {
             setItemForm(prev => ({ ...prev, newArtIme: file }))
@@ -59,11 +58,11 @@ export default function EditItemModal({ isOpen, onClose, item, onSuccess }) {
         setItemForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
-    const handleRemoveItem = () => {
+    const handleRemoveItem = async () => {
         const id = itemFrom.id
 
         try {
-            const rs = deleteItem(id)
+            const rs = await deleteItem(id)
             toast.success('Item removed successfully')
             onSuccess()
             onClose()

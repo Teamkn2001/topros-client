@@ -37,7 +37,7 @@ export const editItem = async (itemId, formData) => {
       }`,
     },
   });
-  console.log("api response ===", rs);
+
   return rs;
 };
 

@@ -17,7 +17,7 @@ const useUserStore = create(persist((set, get) => ({
     fetchEditedUser: async (userId) => {
         const rs = await getUserById(userId)
         set({ user: rs.userData })
-        // console.log('after set new user', get().user)
+       
         return rs
     }
 }),

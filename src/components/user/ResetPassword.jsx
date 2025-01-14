@@ -116,12 +116,12 @@ export default function ResetPassword({ onClose }) {
                                     onSubmit={(e) => handleSubmitNewPassword(e)}>
                                     <input
                                         onChange={(e) => setNewPassword(e.target.value)}
-                                        type="text"
+                                        type="password"
                                         placeholder="new password"
                                         className="input input-bordered input-info w-full max-w-xs" />
                                     <input
                                         onChange={(e) => setConfirmPassword(e.target.value)}
-                                        type="text"
+                                        type="password"
                                         placeholder="confirm new password"
                                         className="input input-bordered input-info w-full max-w-xs" />
 

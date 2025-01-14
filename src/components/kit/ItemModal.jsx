@@ -119,11 +119,11 @@ export default function ItemModal({ isOpen, onClose, item }) {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             {/* header */}
-            <div className='w-full h-auto flex gap-3 items-center justify-between px-7 py-2 bg-yellow-200 '>
+            <div className='w-full h-auto flex gap-3 items-center justify-between px-7 py-2'>
                 <button
                     onClick={() => handleClickLike()}
                     className='flex gap-2 items-center '>
-                    {isLiked ? <LikeIcon width={40} /> : <LikeGrayIcon width={40} />}
+                    {isLiked ? <LikeIcon width={40} /> : <LikeGrayIcon width={40} id="modal-heart"/>}
                     <p>{likeCount}</p>
                 </button>
 
@@ -138,10 +138,10 @@ export default function ItemModal({ isOpen, onClose, item }) {
             {isCommentOpen
                 ? null
                 : <div className='flex w-[45rem]'>
-                    <div className='flex-1 bg-pink-200 flex justify-center items-center p-4'>
+                    <div className='flex-1 flex justify-center items-center p-4'>
                         <ItemCard imgUrl={item?.artImg} />
                     </div>
-                    <div className='flex-1 bg-green-300 flex flex-col justify-start p-6'>
+                    <div className='flex-1 flex flex-col justify-start p-6'>
                         <h1 className='text-[2rem]'>{itemData?.artName || 'art name'}</h1>
                         <p>Artist : {itemData?.owner?.username} </p>
                         <p>Detail : {itemData?.artDescription || 'user bored to write now'}</p>
@@ -150,8 +150,8 @@ export default function ItemModal({ isOpen, onClose, item }) {
                 </div>
             }
 
-            <div className='w-[45rem]'>
-                <div className='w-full text-center py-1 '>
+            <div className={`w-[45rem] ${isCommentOpen ? 'slide-top' : 'slide-bottom'}`}>
+                <div className='w-full text-center py-1 border-y border-dashed border-gray-500 bg-slate-100'>
                     <button onClick={() => setIsCommentOpen(!isCommentOpen)}>
                         {isCommentOpen
                             ? <div className='flex gap-2'>
@@ -166,7 +166,7 @@ export default function ItemModal({ isOpen, onClose, item }) {
                     </button>
                 </div>
 
-                <div className={`bg-green-300 ${isCommentOpen ? 'min-h-[20rem] max-h-[35rem]' : 'max-h-[15rem]'} overflow-y-auto `}>
+                <div className={`${isCommentOpen ? 'min-h-[20rem] max-h-[30rem]' : 'max-h-[12rem]'} overflow-y-auto `}>
                     {itemData?.Comment.map((comment, index) => (
                         <div key={index}>
                             <CommentBox comment={comment} />

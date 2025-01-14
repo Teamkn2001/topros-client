@@ -29,10 +29,7 @@ export default function AddItemModal({ isOpen, onClose, onSuccess }) {
     const [loading, setLoading] = useState(false)
 
     const clearForm = () => {
-        if (previewImage) {
-            URL.revokeObjectURL(previewImage)
-            setPreviewImage(null)
-        }
+        setPreviewImage(null)
 
         setItemForm({
             artName: '',
@@ -45,10 +42,14 @@ export default function AddItemModal({ isOpen, onClose, onSuccess }) {
     const handleImageUpload = (e) => {
         const file = e.target.files[0]
         if (file) {
-            setItemForm(prev => ({ ...prev, artImg: file }))
+
+            if (previewImage) {
+                URL.revokeObjectURL(previewImage)
+            }
             // create a preview
             const previewUrl = URL.createObjectURL(file)
             setPreviewImage(previewUrl)
+            setItemForm(prev => ({ ...prev, artImg: file }))
         }
     }
 
@@ -59,13 +60,13 @@ export default function AddItemModal({ isOpen, onClose, onSuccess }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if(!itemFrom.artImg) {
+        if (!itemFrom.artImg) {
             return toast.error('Please upload an image')
-        } else if(!itemFrom.artName) {
+        } else if (!itemFrom.artName) {
             return toast.error('Please enter a name')
         } else if (!itemFrom.category) {
             return toast.error('Please select a category')
-        } 
+        }
 
         try {
             setLoading(true)
@@ -100,7 +101,7 @@ export default function AddItemModal({ isOpen, onClose, onSuccess }) {
                 setPreviewImage(null)
             }
         }
-    }, [previewImage])
+    }, [])
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -206,11 +207,6 @@ export default function AddItemModal({ isOpen, onClose, onSuccess }) {
 
                         <button className="btn btn-success">Add Art</button>
                     </form>
-
-                    {/* Footer */}
-                    <div className="mt-4 text-center text-sm">
-
-                    </div>
                 </div>
             }
         </Modal>

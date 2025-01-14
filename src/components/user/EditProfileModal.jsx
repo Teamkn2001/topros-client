@@ -7,6 +7,7 @@ import UserCard from '../kit/UserCard'
 import logFormData from '../../utils/logFormData'
 import { editProfile } from '../../api/user'
 import ResetPassword from './ResetPassword'
+import UploadLoading from './UploadLoading'
 
 export default function EditProfileModal({ isOpen, onClose }) {
     const user = useUserStore(pull => pull.user)
@@ -49,6 +50,8 @@ export default function EditProfileModal({ isOpen, onClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        setIsLoading(true)
+
         if (profileForm.username === '') {
             return toast.warn('Username is required')
         }
@@ -70,7 +73,11 @@ export default function EditProfileModal({ isOpen, onClose }) {
             const useEditProfile = await editProfile(formData)
             const rs = await fetchEditedUser(user.id)
             clearForm()
-            onClose()
+
+            setTimeout(() => {
+                setIsLoading(false)
+                onClose()
+            }, 1000)
 
         } catch (error) {
             const errMsg = error?.response?.data?.msg || error.message
@@ -98,7 +105,7 @@ export default function EditProfileModal({ isOpen, onClose }) {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             {isLoading
-                ? <div className='min-w-[26rem] flex justify-center items-center h-[30rem]'><p>Loading...</p></div>
+                ? <UploadLoading />
                 :
                 (
                     <div className="min-w-[40rem] max-w-md p-6 ">
@@ -215,7 +222,7 @@ export default function EditProfileModal({ isOpen, onClose }) {
                                 </div>
                             </form>
                         ) : (
-                            <ResetPassword onClose={onClose}/>
+                            <ResetPassword onClose={onClose} />
                         )}
                     </div>
                 )}

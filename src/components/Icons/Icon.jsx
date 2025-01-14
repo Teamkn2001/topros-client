@@ -46,16 +46,17 @@ export  function LikeIcon (props) {
   )
 }
 
-export  function LikeGrayIcon(props) {
+export function LikeGrayIcon(props) {
   return (
     <svg
       viewBox="0 -5.37 77.646 77.646"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ isolation: 'isolate' }}
       {...props}
     >
       <defs>
         <linearGradient
-          id="a"
+          id={`gray-gradient-${props.id || 'default'}`}
           x1={1.044}
           y1={0.005}
           x2={0.413}
@@ -84,7 +85,7 @@ export  function LikeGrayIcon(props) {
         <path
           data-name="Path 71"
           d="M295.337 474.437c-5.407-20.228 1.411-28.894 5-31.889a20.747 20.747 0 00-6.426-5.077c-6.5-1.416-15.583.295-21.458 16.921-1 3.4-1.458 11.938-.492 22.426a65.334 65.334 0 0017.38 16.476c10.242 6.879 12.73 8.743 13.383 8.867.031.006.048.033.083.033s.058-.033.094-.043a2.946 2.946 0 00.76-.373c-2.061-5.773-4.912-14.596-8.324-27.341z"
-          fill="url(#a)"
+          fill={`url(#gray-gradient-${props.id || 'default'})`}
           transform="translate(-263.982 -435.283)"
         />
       </g>

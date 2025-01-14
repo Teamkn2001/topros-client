@@ -142,7 +142,7 @@ export default function ItemModalForUser({ isOpen, onClose, item, setIsEditModal
                     <div className='flex-1 flex justify-center items-center p-4  ml-4'>
                         <ItemCard imgUrl={item?.artImg} />
                     </div>
-                    <div className='flex-1 flex flex-col justify-start p-6   mr-4'>
+                    <div className='flex-1 flex flex-col justify-start p-6 mr-4'>
                         <div className='flex gap-2'>
                             <h1 className='text-[2rem]'>{itemData?.artName || 'art name'}</h1>
                             <button
@@ -174,7 +174,7 @@ export default function ItemModalForUser({ isOpen, onClose, item, setIsEditModal
                     </button>
                 </div>
 
-                <div className={`${isCommentOpen ? 'min-h-[20rem] max-h-[35rem]' : 'max-h-[15rem]'} overflow-y-auto m-4`}>
+                <div className={`${isCommentOpen ? 'min-h-[20rem] max-h-[30rem]' : 'max-h-[12rem]'} overflow-y-auto m-4`}>
                     {itemData?.Comment.map((comment, index) => (
                         <div key={index}>
                             <CommentBox comment={comment} />

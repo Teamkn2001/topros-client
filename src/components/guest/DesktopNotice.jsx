@@ -10,7 +10,7 @@ const DesktopNotice = () => {
     useEffect(() => {
         const checkScreenSize = () => {
             const width = window.innerWidth;
-            setIsMobile(width < 900);
+            setIsMobile(width < 1080);
         };
 
         checkScreenSize();
