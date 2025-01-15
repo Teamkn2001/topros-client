@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const PORT = import.meta.env.VITE_PORT || 7200
+const baseURL = import.meta.env.VITE_BACKEND_URL 
 
-axios.defaults.baseURL = `http://localhost:${PORT}`
+axios.defaults.baseURL =  baseURL
 
 export default axios
