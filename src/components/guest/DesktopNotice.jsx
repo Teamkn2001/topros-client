@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Monitor, X } from 'lucide-react';
+import { Monitor } from 'lucide-react';
 import Lottie from 'lottie-react';
 import mobileNotice from '../../assets/AnimationMobileNotice.json'
 
