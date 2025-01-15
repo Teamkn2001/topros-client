@@ -57,7 +57,7 @@ export default function AuthModal({ isOpen, onClose }) {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
-            <div className="w-full max-w-md p-6">
+            <div className="w-full max-w-md p-6 bg-yellow-500 rounded-lg">
                 {/* Header */}
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-semibold">
@@ -65,7 +65,7 @@ export default function AuthModal({ isOpen, onClose }) {
                     </h2>
                     <button
                         onClick={onClose}
-                        className="text-gray-400 hover:text-gray-500"
+                        className="text-gray-600 hover:text-gray-900 text-2xl"
                     >
                         ✕
                     </button>
@@ -102,7 +102,7 @@ export default function AuthModal({ isOpen, onClose }) {
                     {!isLogin
                         ? <div>
                             <label className="block text-sm font-medium text-gray-700">
-                                Password 
+                                Confirm Password 
                             </label>
                             <input
                                 name='confirmPassword'

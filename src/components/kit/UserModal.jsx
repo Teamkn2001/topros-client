@@ -44,6 +44,7 @@ export default function UserModal({ isOpen, onClose, user }) {
                 <div className='flex flex-wrap gap-8 w-full justify-center'>
                     {user?.ownedItems.map((item, index) => (
                         <div
+                        className='cursor-pointer hover:scale-105 duration-300'
                             onClick={() => { setIsItemModalOpen(true), setWatchItem(item) }}
                             key={index}>
                             <ItemCard width={'w-[12rem]'} height={'h-[12rem]'} imgUrl={item.artImg} />
